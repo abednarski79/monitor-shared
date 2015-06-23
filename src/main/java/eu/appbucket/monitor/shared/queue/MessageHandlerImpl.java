@@ -4,6 +4,8 @@ import eu.appbucket.monitor.shared.pojo.Message;
 import eu.appbucket.monitor.shared.pojo.MessageType;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQMessage;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.jms.*;
 
@@ -16,10 +18,16 @@ public class MessageHandlerImpl implements MessageHandler {
     private Session session;
     private MessageProducer producer;
     private MessageConsumer consumer;
+    private MessageSender messageSender;
+
+    public MessageHandlerImpl() {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-beans.xml");
+        messageSender = (MessageSender)context.getBean("messageSender");
+    }
 
     @Override
     public void sendMessageToQueue(Message messageToSend) {
-        sendMessageToActiveMq(messageToSend);
+        sendMessageToActiveMqUsingSpring(messageToSend);
     }
 
     @Override
@@ -55,6 +63,10 @@ public class MessageHandlerImpl implements MessageHandler {
 
     private void disconnectActiveMqSession() throws JMSException {
         session.close();
+    }
+
+    private void sendMessageToActiveMqUsingSpring(Message messageToSend) {
+        messageSender.send(messageToSend);
     }
 
     private void sendMessageToActiveMq(Message messageToSend) {
