@@ -27,4 +27,9 @@
         <property name="jmsTemplate" ref="jmsTemplate"/>
     </bean>
 
+    <bean id="messageReceiver" class="eu.appbucket.monitor.shared.queue.MessageReceiver">
+        <property name="jmsTemplate" ref="jmsTemplate"/>
+        <property name="destination" ref="destination"/>
+    </bean>
+
 </beans>
