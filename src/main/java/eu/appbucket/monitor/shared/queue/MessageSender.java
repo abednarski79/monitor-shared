@@ -1,17 +1,8 @@
 package eu.appbucket.monitor.shared.queue;
 
-import org.springframework.jms.core.JmsTemplate;
-
-public class MessageSender {
-
-    private JmsTemplate jmsTemplate;
-
-    public void setJmsTemplate(JmsTemplate jmsTemplate) {
-        this.jmsTemplate = jmsTemplate;
-    }
-
-    public void send(final Object Object) {
-        jmsTemplate.convertAndSend(Object);
-    }
+/**
+ * Created by adambednarski on 28/06/2015.
+ */
+public interface MessageSender {
+    void send(Object Object);
 }
-

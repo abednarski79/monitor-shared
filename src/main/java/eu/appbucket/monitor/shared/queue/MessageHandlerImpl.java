@@ -3,17 +3,24 @@ package eu.appbucket.monitor.shared.queue;
 import eu.appbucket.monitor.shared.pojo.Message;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import javax.jms.*;
-
 public class MessageHandlerImpl implements MessageHandler {
 
     private MessageSender messageSender;
     private MessageReceiver messageReceiver;
 
     public MessageHandlerImpl() {
+        messageSender = lookupMessageSender();
+        messageReceiver = lookupMessageReceiver();
+    }
+
+    protected MessageSender lookupMessageSender() {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-beans.xml");
-        messageSender = (MessageSender)context.getBean("messageSender");
-        messageReceiver = (MessageReceiver)context.getBean("messageReceiver");
+        return (MessageSender)context.getBean("messageSender");
+    }
+
+    protected MessageReceiver lookupMessageReceiver() {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-beans.xml");
+        return (MessageReceiver)context.getBean("messageReceiver");
     }
 
     @Override

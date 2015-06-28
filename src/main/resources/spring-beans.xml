@@ -23,11 +23,11 @@
         <property name="defaultDestination" ref="destination" />
     </bean>
 
-    <bean id="messageSender" class="eu.appbucket.monitor.shared.queue.MessageSender">
+    <bean id="messageSender" class="eu.appbucket.monitor.shared.queue.MessageSenderImpl">
         <property name="jmsTemplate" ref="jmsTemplate"/>
     </bean>
 
-    <bean id="messageReceiver" class="eu.appbucket.monitor.shared.queue.MessageReceiver">
+    <bean id="messageReceiver" class="eu.appbucket.monitor.shared.queue.MessageReceiverImpl">
         <property name="jmsTemplate" ref="jmsTemplate"/>
         <property name="destination" ref="destination"/>
     </bean>
